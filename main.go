@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -54,6 +53,6 @@ func main() {
 	find("package.json")
 
 	j, _ := json.Marshal(manifests)
-	fmt.Println(string(j))
+	// fmt.Println(string(j))
 	githubactions.SetOutput("matrix", string(j))
 }

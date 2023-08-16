@@ -39,5 +39,4 @@ jobs:
 
       - name: Test
         run: |
-          ls
-          pwd
+          echo "Insert whatever you want here :D"
