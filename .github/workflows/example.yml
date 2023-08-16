@@ -36,4 +36,4 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo ${{ toJson(matrix.job) }} | jq
+          echo ${{ matrix.job.change }}
