@@ -1,0 +1,19 @@
+name: 'example'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate-matrix:
+    name: 'Generate Matrix'
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate.outputs.matrix }}
+
+    steps:
+      - name: Clone
+        uses: actions/checkout@v3.5.3
+
+      - name: Matrix
+        run: |
+          go run main.go
