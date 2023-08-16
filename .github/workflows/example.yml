@@ -29,9 +29,9 @@ jobs:
     strategy:
       matrix:
         job: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-    # defaults:
-    #   run:
-    #     working-directory: ${{ matrix.job.change }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.job.change }}
 
     steps:
       - name: Clone
