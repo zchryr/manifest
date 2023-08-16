@@ -50,8 +50,6 @@ func main() {
 
 	j, _ := json.Marshal(manifests)
 	fmt.Println(string(j))
-	// fmt.Println("test")
 
-	githubactions.SetOutput("matrix", "test")
-	// githubactions.SetOutput("matrix", string(j))
+	githubactions.SetOutput("matrix", string(j))
 }
