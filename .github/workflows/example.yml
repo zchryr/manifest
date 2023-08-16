@@ -31,7 +31,7 @@ jobs:
         job: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
     defaults:
       run:
-        working-directory: ${{ matrix.job.cd }}
+        working-directory: ${{ matrix.job.change }}
 
     steps:
       - name: Test
