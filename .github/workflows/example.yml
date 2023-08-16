@@ -33,4 +33,4 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo ${{ fromJson(needs.generate-matrix.outputs.matrix) }} | jq
+          echo ${{ toJson(needs.generate-matrix.outputs.matrix) }} | jq
