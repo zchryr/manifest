@@ -33,4 +33,6 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo ${{ toJson(needs.generate-matrix.outputs.matrix) }} | jq
+          cd ${{ matrix.job.cd }}
+          ls -al
+          pwd
