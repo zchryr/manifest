@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -19,6 +18,7 @@ type ManifestInfo struct {
 
 var manifests []ManifestInfo
 
+// Finds manifest files and adds them to manifests slice.
 func find(manifest string) {
 	err := filepath.Walk(".",
 		func(path string, info os.FileInfo, err error) error {
@@ -27,12 +27,16 @@ func find(manifest string) {
 			return err
 		}
 
+		// Splits strings by /.
 		split := strings.Split(path, "/")
+
+		// If last index of string is equal to manifest file.
 		if split[len(split)-1] == manifest {
+			// Create struct with manifest info.
 			m := ManifestInfo {
 				Short: strings.TrimRight(strings.Split(path, manifest)[0], "/"),
-				Change: "./" + strings.Split(path, manifest)[0],
-				Full: "./" + path,
+				Change: strings.Split(path, manifest)[0],
+				Full: path,
 			}
 
 			manifests = append(manifests, m)
@@ -49,7 +53,5 @@ func main() {
 	find("package.json")
 
 	j, _ := json.Marshal(manifests)
-	fmt.Println(string(j))
-
 	githubactions.SetOutput("matrix", string(j))
 }
