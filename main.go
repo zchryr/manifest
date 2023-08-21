@@ -51,6 +51,9 @@ func find(manifest string) {
 }
 
 func main() {
+	// List all env vars.
+	fmt.Println(os.Environ())
+
 	// find("package.json")
 	input_manifest := githubactions.GetInput("manifest")
 
