@@ -1,0 +1,45 @@
+name: 'CI - Go Build'
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ['windows', 'darwin', 'linux']
+        arch: ['arm64', 'amd64']
+
+    steps:
+      - uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+
+      - run: git fetch --force --tags
+
+      - uses: actions/setup-go@v4.1.0
+        with:
+          go-version: '1.21.0'
+
+      - name: Go Build
+        run: |
+          export GOOS=${{ matrix.os }}
+          export GOARCH=${{ matrix.arch }}
+
+          mkdir bin
+          go build -o bin/${{ matrix.os }}-${{ matrix.arch }} main.go
+
+      - name: Upload files to a GitHub release
+        uses: svenstaro/upload-release-action@2.7.0
+        with:
+          tag: ${{ github.ref }}
+          file: bin/${{ matrix.os }}-${{ matrix.arch }}
+          asset_name: build-notifier-action_$tag-${{ matrix.os }}-${{ matrix.arch }}
