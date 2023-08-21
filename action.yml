@@ -36,6 +36,8 @@ runs:
       run: |
         go run main.go
       shell: bash
+      with:
+        manifest: ${{ inputs.manifest }}
 
     # - name: Testing
     #   run: |
