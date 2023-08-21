@@ -36,10 +36,3 @@ runs:
       env:
         INPUT_MANIFEST: ${{ inputs.manifest }}
         INPUT_IGNORE: ${{ inputs.ignore }}
-
-    # - name: Testing
-    #   run: |
-    #     pwd
-    #     ls -al
-    #     go build main.go
-    #   shell: bash
