@@ -29,6 +29,7 @@ runs:
         go-version: '1.21.0'
 
     - name: Run Action
+      id: generate
       run: |
         go run main.go
       shell: bash
