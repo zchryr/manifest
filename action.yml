@@ -29,7 +29,12 @@ runs:
 
     - name: Testing
       run: |
-        pwd
-        ls -al
-        go build main.go
+        go run main.go
       shell: bash
+
+    # - name: Testing
+    #   run: |
+    #     pwd
+    #     ls -al
+    #     go build main.go
+    #   shell: bash
