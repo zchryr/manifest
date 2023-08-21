@@ -6,8 +6,8 @@ The purpose of this GitHub Action is to generate a matrix to dynamically generat
 
 A monorepo will typically have a directory structure something like the following example.
 
-    .
-    package.json
+    │ .
+    │ package.json
     ├── docs
         ├── document.md
     ├── src
