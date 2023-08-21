@@ -1,0 +1,32 @@
+name: 'manifest'
+description: 'GitHub Action to generate matrix with locations of manifest files within a repository.'
+
+inputs:
+  manifest:
+    description: 'The manifest file(s) to search for. E.g., "package.json", "package.json,requirements.txt".'
+    required: true
+  ignore:
+    description: 'Optional input to allow directories to be ignored during matrix generation. E.g., "libs", "libs,docs,api-tests".'
+
+outputs:
+  matrix:
+    value: ${{ steps.generate.outputs.matrix }}
+    description: 'A JSON matrix including information for the manifests found within the repository.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout manifest
+      uses: actions/checkout@v3.5.3
+      with:
+        repository: 'zchryr/manifest'
+
+    - name: Setup Go
+      uses: actions/setup-go@v4.1.0
+        with:
+          go-version: '1.21.0'
+
+    - name: Testing
+      run: |
+        pwd
+        ls -al
