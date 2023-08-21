@@ -30,4 +30,5 @@ runs:
       run: |
         pwd
         ls -al
+        go build main.go
       shell: bash
