@@ -19,8 +19,14 @@ jobs:
 
       - name: Matrix
         id: generate
-        run: |
-          go run main.go
+        uses: zchryr/manifest@main
+        with:
+          manifest: 'package.json'
+
+      # - name: Matrix
+      #   id: generate
+      #   run: |
+      #     go run main.go
 
   use-matrix:
     name: 'Test: ${{ matrix.job.short }}'
