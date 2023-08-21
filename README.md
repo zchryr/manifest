@@ -56,8 +56,8 @@ Zachary Rohrbach - [LinkedIn](https://www.linkedin.com/in/zchryr/)
 
 ## Version History
 
-- 0.1
-  - Initial Release
+- v0.0.1
+  - Initial Testing
 
 ## License
 
