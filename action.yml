@@ -8,6 +8,7 @@ inputs:
   ignore:
     description: 'Optional input to allow directories to be ignored during matrix generation. E.g., "libs", "libs,docs,api-tests".'
     required: false
+    default: ''
 
 outputs:
   matrix:
@@ -36,8 +37,9 @@ runs:
       run: |
         go run main.go
       shell: bash
-      with:
-        manifest: ${{ inputs.manifest }}
+      env:
+        INPUT_MANIFEST: ${{ inputs.manifest }}
+        INPUT_IGNORE: ${{ inputs.ignore }}
 
     # - name: Testing
     #   run: |
