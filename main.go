@@ -52,10 +52,11 @@ func find(manifest string) {
 
 func main() {
 	// List all env vars.
-	fmt.Println(os.Environ())
+	// fmt.Println(os.Environ())
 
 	// find("package.json")
 	input_manifest := githubactions.GetInput("manifest")
+	fmt.Println("input_manifest:" + input_manifest)
 
 	if input_manifest == "" {
 		githubactions.Fatalf("Missing input: 'manifest'")
