@@ -30,3 +30,4 @@ runs:
       run: |
         pwd
         ls -al
+      shell: bash
