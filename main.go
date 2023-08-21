@@ -51,15 +51,30 @@ func find(manifest string) {
 }
 
 func main() {
-	input_manifest := githubactions.GetInput("manifest")
+	ci := os.Getenv("CI")
 
-	if input_manifest == "" {
-		githubactions.Fatalf("Missing input: 'manifest'")
+	if ci == "true" {
+		input_manifest := githubactions.GetInput("manifest")
+
+		if input_manifest == "" {
+			githubactions.Fatalf("Missing input: 'manifest'")
+		}
+
+		find(input_manifest)
+
+		j, _ := json.Marshal(manifests)
+		fmt.Println(string(j))
+		githubactions.SetOutput("matrix", string(j))
+	} else {
+		input_manifest := os.Getenv("INPUT_MANIFEST")
+
+		if input_manifest == "" {
+			fmt.Println("Missing environment variable: 'INPUT_MANIFEST'")
+			os.Exit(1)
+		}
+
+		find(input_manifest)
+		j, _ := json.Marshal(manifests)
+		fmt.Println(string(j))
 	}
-
-	find(input_manifest)
-
-	j, _ := json.Marshal(manifests)
-	fmt.Println(string(j))
-	githubactions.SetOutput("matrix", string(j))
 }
