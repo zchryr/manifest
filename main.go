@@ -50,7 +50,14 @@ func find(manifest string) {
 }
 
 func main() {
-	find("package.json")
+	// find("package.json")
+	input_manifests := githubactions.GetInput("manifests")
+
+	if input_manifests == "" {
+		githubactions.Fatalf("Missing input: 'manifests'")
+	}
+
+	find(input_manifests)
 
 	j, _ := json.Marshal(manifests)
 	// fmt.Println(string(j))

@@ -7,6 +7,7 @@ inputs:
     required: true
   ignore:
     description: 'Optional input to allow directories to be ignored during matrix generation. E.g., "libs", "libs,docs,api-tests".'
+    required: false
 
 outputs:
   matrix:
