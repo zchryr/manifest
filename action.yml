@@ -27,6 +27,11 @@ runs:
       with:
         go-version: '1.21.0'
 
+    - name: Echo
+      run: |
+        echo "env.INPUT_MANIFEST: ${{ env.INPUT_MANIFEST }}"
+      shell: bash
+
     - name: Testing
       run: |
         go run main.go
