@@ -23,11 +23,6 @@ jobs:
         with:
           manifest: 'package.json'
 
-      # - name: Matrix
-      #   id: generate
-      #   run: |
-      #     go run main.go
-
   use-matrix:
     name: 'Test: ${{ matrix.job.short }}'
     runs-on: ubuntu-latest
