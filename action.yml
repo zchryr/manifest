@@ -29,7 +29,7 @@ runs:
 
     - name: Echo
       run: |
-        echo "env.INPUT_MANIFEST: ${{ env.INPUT_MANIFEST }}"
+        echo ${{ inputs.manifest }}
       shell: bash
 
     - name: Testing
