@@ -28,12 +28,7 @@ runs:
       with:
         go-version: '1.21.0'
 
-    - name: Echo
-      run: |
-        echo ${{ inputs.manifest }}
-      shell: bash
-
-    - name: Testing
+    - name: Run Action
       run: |
         go run main.go
       shell: bash
