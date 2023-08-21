@@ -42,4 +42,4 @@ jobs:
         with:
           tag: ${{ github.ref }}
           file: bin/${{ matrix.os }}-${{ matrix.arch }}
-          asset_name: build-notifier-action_$tag-${{ matrix.os }}-${{ matrix.arch }}
+          asset_name: manifest_$tag-${{ matrix.os }}-${{ matrix.arch }}
