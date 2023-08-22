@@ -18,10 +18,10 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    # - name: Checkout manifest
-    #   uses: actions/checkout@v3.5.3
-    #   with:
-    #     repository: 'zchryr/manifest'
+    - name: Checkout manifest
+      uses: actions/checkout@v3.5.3
+      with:
+        repository: 'zchryr/manifest'
 
     - name: Setup Go
       uses: actions/setup-go@v4.1.0
