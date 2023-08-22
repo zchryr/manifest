@@ -41,9 +41,10 @@ runs:
     - name: Run Action
       id: generate
       run: |
+        cd ${{ github.action_path }}
         go run main.go
       shell: bash
-      working-directory: ${{ github.action_path }}
+      # working-directory: ${{ github.action_path }}
       env:
         INPUT_MANIFEST: ${{ inputs.manifest }}
         INPUT_IGNORE: ${{ inputs.ignore }}
