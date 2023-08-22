@@ -1,4 +1,4 @@
-name: 'manifest'
+name: 'manifest - zchryr'
 description: 'GitHub Action to generate matrix with locations of manifest files within a repository.'
 
 inputs:
