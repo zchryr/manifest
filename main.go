@@ -6,9 +6,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/sethvargo/go-githubactions"
+	"golang.org/x/exp/slices"
 )
 
 type ManifestInfo struct {
@@ -17,7 +19,11 @@ type ManifestInfo struct {
 	Short string `json:"short"`
 }
 
+// Slice to contain information about manifest found during search.
 var manifests []ManifestInfo
+
+// Slice to contain information from input on which directories to ignore.
+var ignore []string
 
 // Finds manifest files and adds them to manifests slice.
 func find(manifest string) {
@@ -40,7 +46,10 @@ func find(manifest string) {
 				Full: path,
 			}
 
-			manifests = append(manifests, m)
+			// If the manifest found is not the ignore string.
+			if !slices.Contains(ignore, m.Short) && !slices.Contains(ignore, split[0]) {
+				manifests = append(manifests, m)
+			}
 		}
 		return nil
 	})
@@ -50,30 +59,68 @@ func find(manifest string) {
 	}
 }
 
+// Completes a regex check to make sure input is comma separated string.
+// If valid, sets value of ignore slice to the value of the input.
+// This regex supports forward slashes, underscores, and dashes.
+func regexMatchCommaSeparatedString(comma_separated_string string) bool {
+	matched, _ := regexp.MatchString(`^([a-z0-9\s\/-_]+,)*([a-z0-9\/\s\-_]+){1}$`, comma_separated_string)
+
+	if matched {
+		split := strings.Split(comma_separated_string, ",")
+		ignore = split
+
+		return true
+	} else  {
+		return false
+	}
+}
+
 func main() {
+	// GitHub Actions has this environment variable = true.
 	ci := os.Getenv("CI")
 
-	if ci == "true" {
-		input_manifest := githubactions.GetInput("manifest")
+	// Get inputs.
+	input_manifest := os.Getenv("INPUT_MANIFEST")
+	input_ignore := os.Getenv("INPUT_IGNORE")
 
+	// If running in GitHub Actions.
+	if ci == "true" {
+		// If 'manifest' input is not set.
 		if input_manifest == "" {
 			githubactions.Fatalf("Missing input: 'manifest'")
 		}
 
+		// If 'ignore' input is set, test for valid value.
+		if input_ignore != "" {
+			if !regexMatchCommaSeparatedString(input_ignore) {
+				githubactions.Fatalf("Input: 'ignore' failed comma separated string check.")
+			}
+		}
+
 		find(input_manifest)
 
+		// Convert slice to JSON.
 		j, _ := json.Marshal(manifests)
 		fmt.Println(string(j))
 		githubactions.SetOutput("matrix", string(j))
-	} else {
-		input_manifest := os.Getenv("INPUT_MANIFEST")
-
+	} else { // If running locally.
+		// If 'manifest' input is not set.
 		if input_manifest == "" {
 			fmt.Println("Missing environment variable: 'INPUT_MANIFEST'")
 			os.Exit(1)
 		}
 
+		// If 'ignore' input is set, test for valid value.
+		if input_ignore != "" {
+			if !regexMatchCommaSeparatedString(input_ignore) {
+				fmt.Println("Input: 'ignore' failed comma separated string check.")
+				os.Exit(1)
+			}
+		}
+
 		find(input_manifest)
+
+		// Convert slice to JSON.
 		j, _ := json.Marshal(manifests)
 		fmt.Println(string(j))
 	}
