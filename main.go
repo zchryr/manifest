@@ -25,9 +25,12 @@ var manifests []ManifestInfo
 // Slice to contain information from input on which directories to ignore.
 var ignore []string
 
+// Default search path.
+var path string = "."
+
 // Finds manifest files and adds them to manifests slice.
 func find(manifest string) {
-	err := filepath.Walk(".",
+	err := filepath.Walk(path,
 		func(path string, info os.FileInfo, err error) error {
 
 		if err != nil {
@@ -82,6 +85,8 @@ func main() {
 	// Get inputs.
 	input_manifest := os.Getenv("INPUT_MANIFEST")
 	input_ignore := os.Getenv("INPUT_IGNORE")
+	input_path := os.Getenv("INPUT_PATH")
+	path = input_path
 
 	// If running in GitHub Actions.
 	if ci == "true" {
