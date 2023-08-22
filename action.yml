@@ -9,6 +9,10 @@ inputs:
     description: 'Optional input to allow directories to be ignored during matrix generation. E.g., "libs", "libs,docs,api-tests".'
     required: false
     default: ''
+  # path:
+  #   description: 'Path for where manifest should search.'
+  #   required: false
+  #   default: ${{ action.work }}
 
 outputs:
   matrix:
@@ -39,6 +43,7 @@ runs:
       run: |
         go run main.go
       shell: bash
+      working-directory: ${{ github.action_path }}
       env:
         INPUT_MANIFEST: ${{ inputs.manifest }}
         INPUT_IGNORE: ${{ inputs.ignore }}
