@@ -25865,14 +25865,14 @@ const fs = __nccwpck_require__(7147);
 const path = __nccwpck_require__(1017);
 
 // Function to retrieve inputs.
-// If running within GitHub Actions, it fetches inputs using the @actions/core package.
-// If running locally, it fetches values from environment variables.
+// This abstracts the difference between running inside GitHub Actions and running locally.
 function getInput(inputName) {
+  // If running within GitHub Actions, use the @actions/core package.
   if (process.env.GITHUB_ACTION) {
-    // In GitHub Actions, fetch the input using the @actions/core package.
     return core.getInput(inputName);
-  } else {
-    // Locally, fetch the input from environment variables.
+  }
+  // If running locally, fetch the input from environment variables.
+  else {
     return process.env[inputName.toUpperCase()];
   }
 }
@@ -25880,8 +25880,9 @@ function getInput(inputName) {
 // Retrieve the name of the manifest file to search for.
 const manifestFileName = path.basename(getInput('manifest'));
 
-// Retrieve the directories to ignore, split by commas and remove any whitespace.
-// Default to an empty array if the input isn't provided.
+// Retrieve the directories to ignore.
+// This splits the input based on commas, and trims any whitespace.
+// If the input isn't provided, defaults to an empty array.
 const ignoreDirs = getInput('ignore_dirs')
   ? getInput('ignore_dirs')
       .split(',')
@@ -25889,10 +25890,11 @@ const ignoreDirs = getInput('ignore_dirs')
   : [];
 
 // Check if the root directory should be ignored.
-// Defaults to false if the input isn't provided or isn't "true".
+// Convert the input to lowercase and check if it's 'true'.
+// This allows for flexibility in the provided value, e.g., True, TRUE, etc.
 const ignoreRoot = (getInput('IGNORE_ROOT') || '').toLowerCase() === 'true';
 
-// Function to check if a directory is in the list of directories to ignore.
+// Function to determine if a directory should be ignored.
 function isIgnored(directory) {
   return ignoreDirs.some((ignoreDir) => {
     // Formulate a complete path for the directory to ignore.
@@ -25911,7 +25913,7 @@ function searchForFiles(directory, resultArray) {
     for (const file of files) {
       // Formulate a full path for the file or directory.
       const filePath = path.join(directory, file);
-      // Get details (like if it's a file or directory).
+      // Get details like if it's a file or directory.
       const stat = fs.statSync(filePath);
 
       if (stat.isDirectory()) {
@@ -25919,14 +25921,16 @@ function searchForFiles(directory, resultArray) {
         if (!isIgnored(filePath)) {
           searchForFiles(filePath, resultArray);
         }
-      } else if (file === manifestFileName) {
-        // If it's the manifest file and either we're not ignoring the root
-        // or the current directory isn't the root, add its details to the result.
+      }
+      // If it's the manifest file and we're either not ignoring the root
+      // or the current directory isn't the root, add its details to the result.
+      else if (file === manifestFileName) {
         if (!ignoreRoot || directory !== process.cwd()) {
           resultArray.push({
-            relativePath: path.relative(process.cwd(), filePath), // Relative path from the current working directory.
-            fullPath: filePath, // Full path of the file.
-            cd: path.dirname(filePath), // Directory containing the file.
+            // Only the directory path, not including the manifest file name.
+            relativePath: path.relative(process.cwd(), directory),
+            fullPath: filePath,
+            cd: path.dirname(filePath),
           });
         }
       }
