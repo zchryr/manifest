@@ -37,5 +37,5 @@ const searchResults = {
   files: foundFiles,
 };
 
-core.setOutput('search_results', JSON.stringify(searchResults, null, 2));
+core.setOutput('matrix', JSON.stringify(searchResults, null, 2));
 console.log(JSON.stringify(searchResults, null, 2));
