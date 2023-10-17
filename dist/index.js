@@ -25895,12 +25895,11 @@ const foundFiles = [];
 
 searchForFiles(currentDirectory, foundFiles);
 
-const searchResults = {
-  files: foundFiles,
-};
+// Convert the foundFiles array to a JSON string
+const matrix = JSON.stringify(foundFiles, null, 2);
 
-core.setOutput('matrix', JSON.stringify(searchResults, null, 2));
-console.log(JSON.stringify(searchResults, null, 2));
+core.setOutput('matrix', matrix);
+console.log(matrix);
 
 })();
 
