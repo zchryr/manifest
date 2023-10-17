@@ -3,49 +3,16 @@ description: 'GitHub Action to generate matrix with locations of manifest files 
 
 inputs:
   manifest:
-    description: 'The manifest file(s) to search for. E.g., "package.json", "package.json,requirements.txt".'
+    description: 'The file to search for in the directory and its subdirectories.'
     required: true
-  ignore:
-    description: 'Optional input to allow directories to be ignored during matrix generation. E.g., "libs", "libs,docs,api-tests".'
+  manifest_ignore:
+    description: 'Optional. A comma-separated list of directories to ignore during the search.'
     required: false
-    default: ''
-  path:
-    description: 'Path for where manifest should search.'
-    required: false
-    default: ${{ github.workspace }}
 
 outputs:
-  matrix:
-    value: ${{ steps.generate.outputs.matrix }}
-    description: 'A JSON matrix including information for the manifests found within the repository.'
+  search_results:
+    description: 'JSON results of the search for the specified file.'
 
 runs:
-  using: 'composite'
-  steps:
-    - name: Checkout manifest
-      uses: actions/checkout@v4
-      with:
-        repository: 'zchryr/manifest'
-
-    - name: Setup Go
-      uses: actions/setup-go@v4.1.0
-      with:
-        go-version: '1.21.0'
-
-    - name: echo
-      run: |
-        pwd
-        ls -al
-      shell: bash
-
-    - name: Run Action
-      id: generate
-      run: |
-        cd ${{ github.action_path }}
-        go run main.go
-      shell: bash
-      # working-directory: ${{ github.action_path }}
-      env:
-        INPUT_MANIFEST: ${{ inputs.manifest }}
-        INPUT_IGNORE: ${{ inputs.ignore }}
-        INPUT_PATH: ${{ inputs.path }}
+  using: 'node18'
+  main: 'index.js'
