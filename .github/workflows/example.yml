@@ -28,12 +28,12 @@ jobs:
     name: 'Test: ${{ matrix.job.relativePath }}'
     runs-on: ubuntu-latest
     needs: generate-matrix
-    strategy:
-      matrix:
-        job: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-    defaults:
-      run:
-        working-directory: ${{ matrix.job.cd }}
+    # strategy:
+    #   matrix:
+    #     job: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    # defaults:
+    #   run:
+    #     working-directory: ${{ matrix.job.cd }}
 
     steps:
       - name: Clone
@@ -42,5 +42,5 @@ jobs:
       - name: Test
         run: |
           pwd
-          ls -al
+          echo '${{ fromJson(needs.generate-matrix.outputs.matrix) }}'
           echo "Insert whatever you want here :D"
