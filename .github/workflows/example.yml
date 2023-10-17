@@ -22,17 +22,18 @@ jobs:
         uses: zchryr/manifest@main
         with:
           manifest: 'package.json'
+          manifest_ignore: 'libs'
 
   use-matrix:
-    name: 'Test: ' # ${{ matrix.job.relativePath }}'
+    name: 'Test: ${{ matrix.job.relativePath }}'
     runs-on: ubuntu-latest
     needs: generate-matrix
-    # strategy:
-    #   matrix:
-    #     job: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-    # defaults:
-    #   run:
-    #     working-directory: ${{ matrix.job.cd }}
+    strategy:
+      matrix:
+        job: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    defaults:
+      run:
+        working-directory: ${{ matrix.job.cd }}
 
     steps:
       - name: Clone
@@ -41,5 +42,5 @@ jobs:
       - name: Test
         run: |
           pwd
-          echo '${{ needs.generate-matrix.outputs.matrix }}'
+          ls -al
           echo "Insert whatever you want here :D"
