@@ -3,10 +3,13 @@ description: 'GitHub Action to generate matrix with locations of manifest files 
 
 inputs:
   manifest:
-    description: 'The file to search for in the directory and its subdirectories.'
+    description: 'The manifest file to search for in the directory and its subdirectories.'
     required: true
   manifest_ignore:
     description: 'Optional. A comma-separated list of directories to ignore during the search.'
+    required: false
+  ignore_root:
+    description: 'Optional. Ignore root directory of repository if manifest is found in it.'
     required: false
 
 outputs:
