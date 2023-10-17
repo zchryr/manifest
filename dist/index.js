@@ -25882,8 +25882,8 @@ const manifestFileName = path.basename(getInput('manifest'));
 
 // Retrieve the directories to ignore, split by commas and remove any whitespace.
 // Default to an empty array if the input isn't provided.
-const ignoreDirs = getInput('manifest_ignore')
-  ? getInput('manifest_ignore')
+const ignoreDirs = getInput('ignore_dirs')
+  ? getInput('ignore_dirs')
       .split(',')
       .map((item) => item.trim())
   : [];
