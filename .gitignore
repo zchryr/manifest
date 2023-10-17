@@ -29,7 +29,6 @@ yarn.lock
 .idea
 
 # Ignore compiled output
-/dist
 /build
 
 # Ignore coverage reports
