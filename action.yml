@@ -14,5 +14,5 @@ outputs:
     description: 'JSON results of the search for the specified file.'
 
 runs:
-  using: 'node18'
+  using: 'node20'
   main: 'index.js'
