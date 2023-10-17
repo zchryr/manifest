@@ -25864,11 +25864,32 @@ const core = __nccwpck_require__(2186);
 const fs = __nccwpck_require__(7147);
 const path = __nccwpck_require__(1017);
 
+// Get the input values from the workflow YAML file
 const manifestPath = core.getInput('manifest');
 const ignoreDirs = core.getInput('manifest_ignore')
   ? core.getInput('manifest_ignore').split(',')
   : [];
 
+function isIgnored(directory) {
+  return ignoreDirs.some((ignoreDir) => {
+    const ignoreParts = ignoreDir.split('/').filter((part) => part.length > 0);
+    const directoryParts = directory
+      .split('/')
+      .filter((part) => part.length > 0);
+
+    // Check if the directory path matches the 'manifest_ignore' path
+    if (
+      ignoreParts.length > 0 &&
+      ignoreParts.every((part, index) => part === directoryParts[index])
+    ) {
+      return true; // The directory should be ignored
+    }
+
+    return false; // The directory should not be ignored
+  });
+}
+
+// Function to search for files and directories in the current directory and subdirectories
 function searchForFiles(directory, resultArray) {
   const files = fs.readdirSync(directory);
 
@@ -25877,7 +25898,8 @@ function searchForFiles(directory, resultArray) {
     const stat = fs.statSync(filePath);
 
     if (stat.isDirectory()) {
-      if (!ignoreDirs.includes(file)) {
+      // Check if the directory should be ignored
+      if (!isIgnored(filePath)) {
         searchForFiles(filePath, resultArray); // Recursively search in subdirectories
       }
     } else if (file === manifestPath) {
@@ -25890,15 +25912,20 @@ function searchForFiles(directory, resultArray) {
   }
 }
 
+// Get the current working directory
 const currentDirectory = process.cwd();
 const foundFiles = [];
 
+// Start the search for files and directories
 searchForFiles(currentDirectory, foundFiles);
 
 // Convert the foundFiles array to a JSON string
 const matrix = JSON.stringify(foundFiles, null, 2);
 
-core.setOutput('matrix', matrix);
+// Set the 'matrix' output to the JSON string
+// core.setOutput('matrix', matrix);
+
+// Print the JSON string to the console
 console.log(matrix);
 
 })();
