@@ -22,7 +22,7 @@ jobs:
         uses: zchryr/manifest@main
         with:
           manifest: 'package.json'
-          manifest_ignore: 'libs,testing/logs'
+          ignore_dirs: 'libs,testing/logs'
 
   use-matrix:
     name: 'Test: ${{ matrix.job.relativePath }}'

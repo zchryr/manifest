@@ -5,7 +5,7 @@ inputs:
   manifest:
     description: 'The manifest file to search for in the directory and its subdirectories.'
     required: true
-  manifest_ignore:
+  ignore_dirs:
     description: 'Optional. A comma-separated list of directories to ignore during the search.'
     required: false
   ignore_root:
