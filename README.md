@@ -34,15 +34,15 @@ If an organization wanted to complete [SAST](https://en.wikipedia.org/wiki/Stati
 
 ## Getting Started
 
-### Dependencies
-
-This project is written in Go, and will first only support Linux runners for GitHub Actions.
-
-Please refer to the [go.mod](go.mod) file for the list of dependencies.
-
 ### Installing
 
 TBD
+
+### Examples
+
+WIP
+
+Please see [zchryr/manifest-howto](https://github.com/zchryr/manifest-howto) for examples of usage of this GitHub Action.
 
 ## Help
 
@@ -52,12 +52,7 @@ If you run into any difficulties, please open a GitHub issue.
 
 Contributors names and contact info
 
-Zachary Rohrbach - [LinkedIn](https://www.linkedin.com/in/zchryr/)
-
-## Version History
-
-- v0.0.1
-  - TBD
+Zachary R - [LinkedIn](https://www.linkedin.com/in/zchryr/)
 
 ## License
 
