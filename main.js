@@ -45,20 +45,36 @@ function isIgnored(directory) {
 }
 
 // Function to search for files matching the manifest pattern in a directory and its subdirectories.
-function searchForFiles(directory, resultArray) {
+function searchForFiles(directory, resultArray, currentWorkingDirectory) {
   // Use the glob package to search for files matching the manifest pattern.
   // Note: ** matches all directories; * matches within the current directory.
   glob.sync(`${directory}/**/${manifestPattern}`).forEach((filePath) => {
     const directoryOfFoundFile = path.dirname(filePath);
 
-    // Check if this directory should be ignored
-    // or if it's the root directory and we are ignoring the root.
+    // Calculate the relative path from the current working directory to the directory
+    // where the found file is located. This helps determine the location of the file
+    // relative to the current working directory.
+    let relativePath = path.relative(
+      currentWorkingDirectory,
+      directoryOfFoundFile
+    );
+
+    // If the relativePath is empty (current working directory), set it to '.'
+    if (!relativePath) {
+      relativePath = '.';
+    }
+
     if (
       !isIgnored(directoryOfFoundFile) &&
-      (!ignoreRoot || directoryOfFoundFile !== process.cwd())
+      (!ignoreRoot || directoryOfFoundFile !== currentWorkingDirectory)
     ) {
+      // Adjust relativePath when found in the current working directory
+      if (relativePath === '.') {
+        relativePath = path.basename(currentWorkingDirectory);
+      }
+
       resultArray.push({
-        relativePath: path.relative(process.cwd(), directoryOfFoundFile),
+        relativePath: relativePath,
         fullPath: filePath,
         cd: directoryOfFoundFile,
       });
@@ -66,19 +82,20 @@ function searchForFiles(directory, resultArray) {
   });
 }
 
-// Start the search from the current working directory.
+// Get the current working directory
 const currentDirectory = process.cwd();
-// This array will store details of all the found manifest files.
+
+// Initialize an array to store details of all the found manifest files
 const foundFiles = [];
 
-// Kick off the search.
-searchForFiles(currentDirectory, foundFiles);
+// Kick off the search
+searchForFiles(currentDirectory, foundFiles, currentDirectory);
 
-// Convert the foundFiles array to a pretty-formatted JSON string.
+// Convert the foundFiles array to a pretty-formatted JSON string
 const matrix = JSON.stringify(foundFiles, null, 2);
 
-// If we're in GitHub Actions, set the matrix as an output.
-// Otherwise, print the JSON string for visualization when running locally.
+// If we're in GitHub Actions, set the matrix as an output
+// Otherwise, print the JSON string for visualization when running locally
 if (process.env.GITHUB_ACTION) {
   core.setOutput('matrix', matrix);
 } else {
