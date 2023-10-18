@@ -1,5 +1,8 @@
 name: 'manifest - zchryr'
 description: 'GitHub Action to generate matrix with locations of manifest files within a repository.'
+branding:
+  icon: 'check'
+  color: 'black'
 
 inputs:
   manifest:
