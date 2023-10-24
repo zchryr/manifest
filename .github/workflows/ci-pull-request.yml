@@ -30,4 +30,4 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo "${{ needs.generate-matrix.outputs.matrix }}"
+          echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}" | jq
