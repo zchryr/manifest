@@ -46,4 +46,4 @@ jobs:
 
       - name: Compare JSONs
         run: |
-          node .github/ci/translate.js matrix.out .github/ci/valid.json
+          node .github/ci/compare.js matrix.out .github/ci/valid.json
