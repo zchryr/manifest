@@ -42,7 +42,7 @@ jobs:
 
       - name: Compare JSONs
         run: |
-          echo "FILE_JSON_STRING=$(cat .github/ci/valid.json)" >> $GITHUB_ENV
+          $FILE_JSON_STRING=$(cat .github/ci/valid.json)
 
           echo "file"
           echo $FILE_JSON_STRING
@@ -51,5 +51,6 @@ jobs:
           echo "env"
           echo $ENV_JSON_STRING
         # python .github/ci/compare-jsons.py
+        # echo "FILE_JSON_STRING=$(cat .github/ci/valid.json)" >> $GITHUB_ENV
         env:
-          ENV_JSON_STRING: ${{ needs.generate-matrix.outputs.matrix }} # Assuming
+          ENV_JSON_STRING: ${{ needs.generate-matrix.outputs.matrix }}
