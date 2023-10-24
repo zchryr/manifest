@@ -42,8 +42,8 @@ jobs:
 
       - name: Compare JSONs
         run: |
-          FILE_JSON_STRING=$(cat path/to/your/file.json)
-          python .github/scripts/compare-jsons.py --env-json "${{ toJson(needs.generate-matrix.outputs.matrix) }}" --file-json "$FILE_JSON_STRING"
+          FILE_JSON_STRING=$(cat .github/ci/valid.json)
+          python .github/ci/compare-jsons.py --env-json "${{ toJson(needs.generate-matrix.outputs.matrix) }}" --file-json "$FILE_JSON_STRING"
 
         # echo "file"
         # echo $FILE_JSON_STRING
