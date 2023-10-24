@@ -26,6 +26,9 @@ jobs:
     name: 'Check Matrix'
     runs-on: ubuntu-latest
     needs: generate-matrix
+    defaults:
+      run:
+        working-directory: .github/ci
 
     steps:
       - name: Clone
@@ -46,4 +49,4 @@ jobs:
 
       - name: Compare JSONs
         run: |
-          node .github/ci/compare.js matrix.out .github/ci/valid.json
+          node compare.js matrix.out valid.json
