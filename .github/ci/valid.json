@@ -23,10 +23,5 @@
     "relativePath": "testing/1",
     "fullPath": "/home/runner/work/manifest/manifest/testing/1/package.json",
     "cd": "/home/runner/work/manifest/manifest/testing/1"
-  },
-  {
-    "relativePath": "testing/1",
-    "fullPath": "/home/runner/work/manifest/manifest/testing/1/package.json",
-    "cd": "/home/runner/work/manifest/manifest/testing/1"
   }
 ]
