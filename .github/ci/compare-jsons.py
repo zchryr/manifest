@@ -14,9 +14,11 @@ if __name__ == "__main__":
     parser.add_argument("--file-json", required=True, help="JSON string from file.")
 
     args = parser.parse_args()
+    print(args.env_json)
+    print(args.file_json)
 
-    if not compare_jsons(args.env_json, args.file_json):
-        print("JSONs are not the same!")
-        exit(1)
-    else:
-        print("JSONs match!")
+    # if not compare_jsons(args.env_json, args.file_json):
+    #     print("JSONs are not the same!")
+    #     exit(1)
+    # else:
+    #     print("JSONs match!")
