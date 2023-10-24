@@ -47,9 +47,9 @@ jobs:
       #   run: |
       #     echo "${{ needs.generate-matrix.outputs.matrix }}" | jq
 
-      - name: test
-        run: |
-          cat matrix.json
+      # - name: test
+      #   run: |
+      #     cat matrix.json
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -59,8 +59,6 @@ jobs:
       - name: Compare JSONs
         run: |
           FILE_JSON_STRING=$(cat .github/ci/valid.json)
+          ENV_JSON_STRING=$(cat matrix.json)
 
-        # echo "${{ needs.generate-matrix.outputs.matrix }}" > matrix.json
-        # ENV_JSON_STRING=$(cat matrix.json)
-
-        # python .github/ci/compare-jsons.py --env-json "$ENV_JSON_STRING" --file-json "$FILE_JSON_STRING"
+          python .github/ci/compare-jsons.py --env-json "$ENV_JSON_STRING" --file-json "$FILE_JSON_STRING"
