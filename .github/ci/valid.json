@@ -1,0 +1,27 @@
+[
+  {
+    "relativePath": "manifest",
+    "fullPath": "/home/runner/work/manifest/manifest/package.json",
+    "cd": "/home/runner/work/manifest/manifest"
+  },
+  {
+    "relativePath": "testing/6",
+    "fullPath": "/home/runner/work/manifest/manifest/testing/6/package.json",
+    "cd": "/home/runner/work/manifest/manifest/testing/6"
+  },
+  {
+    "relativePath": "testing/3",
+    "fullPath": "/home/runner/work/manifest/manifest/testing/3/package.json",
+    "cd": "/home/runner/work/manifest/manifest/testing/3"
+  },
+  {
+    "relativePath": "testing/2",
+    "fullPath": "/home/runner/work/manifest/manifest/testing/2/package.json",
+    "cd": "/home/runner/work/manifest/manifest/testing/2"
+  },
+  {
+    "relativePath": "testing/1",
+    "fullPath": "/home/runner/work/manifest/manifest/testing/1/package.json",
+    "cd": "/home/runner/work/manifest/manifest/testing/1"
+  }
+]
