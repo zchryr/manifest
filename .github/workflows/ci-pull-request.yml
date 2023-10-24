@@ -43,7 +43,12 @@ jobs:
       - name: Compare JSONs
         run: |
           echo "FILE_JSON_STRING=$(cat .github/ci/valid.json)" >> $GITHUB_ENV
+
+          echo "file"
           echo $FILE_JSON_STRING
+          echo "\n\n\n"
+
+          echo "env"
           echo $ENV_JSON_STRING
         # python .github/ci/compare-jsons.py
         env:
