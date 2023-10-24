@@ -42,7 +42,7 @@ jobs:
 
       - name: Compare JSONs
         run: |
-          $FILE_JSON_STRING=$(cat .github/ci/valid.json)
+          FILE_JSON_STRING=$(cat .github/ci/valid.json)
 
           echo "file"
           echo $FILE_JSON_STRING
