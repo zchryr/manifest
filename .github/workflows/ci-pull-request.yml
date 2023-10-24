@@ -30,6 +30,7 @@ jobs:
     steps:
       - name: Clone
         uses: actions/checkout@v4
+
       # - name: Test
       #   run: |
       #     echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
@@ -41,7 +42,7 @@ jobs:
 
       - name: Compare JSONs
         run: |
-          echo "FILE_JSON_STRING=$(cat path/to/your/file.json)" >> $GITHUB_ENV
+          echo "FILE_JSON_STRING=$(cat .github/ci/valid.json)" >> $GITHUB_ENV
           python .github/ci/compare-jsons.py
         env:
           ENV_JSON_STRING: ${{ needs.generate-matrix.outputs.matrix }} # Assuming
