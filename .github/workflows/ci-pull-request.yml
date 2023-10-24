@@ -43,14 +43,15 @@ jobs:
       - name: Compare JSONs
         run: |
           FILE_JSON_STRING=$(cat .github/ci/valid.json)
+          python .github/ci/compare-jsons.py
 
-          echo "file"
-          echo $FILE_JSON_STRING
-          echo "\n\n\n"
+        # echo "file"
+        # echo $FILE_JSON_STRING
+        # echo "\n\n\n"
 
-          echo "env"
-          echo $ENV_JSON_STRING
-        # python .github/ci/compare-jsons.py
+        # echo "env"
+        # echo $ENV_JSON_STRING
         # echo "FILE_JSON_STRING=$(cat .github/ci/valid.json)" >> $GITHUB_ENV
+
         env:
           ENV_JSON_STRING: ${{ needs.generate-matrix.outputs.matrix }}
