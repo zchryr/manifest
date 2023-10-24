@@ -31,27 +31,21 @@ jobs:
       - name: Clone
         uses: actions/checkout@v4
 
-      # - name: Test
-      #   run: |
-      #     echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9' # Or any other version you prefer
-
-      - name: Compare JSONs
+      - name: fromJson
         run: |
-          FILE_JSON_STRING=$(cat .github/ci/valid.json)
-          python .github/ci/compare-jsons.py --env-json "${{ needs.generate-matrix.outputs.matrix }}" --file-json "$FILE_JSON_STRING"
+          echo "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
 
-        # echo "file"
-        # echo $FILE_JSON_STRING
-        # echo "\n\n\n"
+      - name: toJson
+      run: |
+        echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
 
-        # echo "env"
-        # echo $ENV_JSON_STRING
-        # echo "FILE_JSON_STRING=$(cat .github/ci/valid.json)" >> $GITHUB_ENV
+      # - name: Setup Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.9' # Or any other version you prefer
 
-        # env:
-        #   ENV_JSON_STRING:
+
+      # - name: Compare JSONs
+      #   run: |
+      #     FILE_JSON_STRING=$(cat .github/ci/valid.json)
+      #     python .github/ci/compare-jsons.py --env-json "${{ needs.generate-matrix.outputs.matrix }}" --file-json "$FILE_JSON_STRING"
