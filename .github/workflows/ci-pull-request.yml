@@ -36,14 +36,13 @@ jobs:
           echo "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
 
       - name: toJson
-      run: |
-        echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
+        run: |
+          echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
 
       # - name: Setup Python
       #   uses: actions/setup-python@v2
       #   with:
       #     python-version: '3.9' # Or any other version you prefer
-
 
       # - name: Compare JSONs
       #   run: |
