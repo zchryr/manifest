@@ -38,15 +38,18 @@ jobs:
       - name: toJson
         run: |
           echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}" > matrix.json
-          cat matrix.json
 
-      - name: echo
-        run: |
-          echo "${{ needs.generate-matrix.outputs.matrix }}"
+      # - name: echo
+      #   run: |
+      #     echo "${{ needs.generate-matrix.outputs.matrix }}"
 
       # - name: jq
       #   run: |
       #     echo "${{ needs.generate-matrix.outputs.matrix }}" | jq
+
+      - name: test
+        run: |
+          cat matrix.json
 
       - name: Setup Python
         uses: actions/setup-python@v2
