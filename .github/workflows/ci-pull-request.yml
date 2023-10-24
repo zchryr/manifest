@@ -31,34 +31,19 @@ jobs:
       - name: Clone
         uses: actions/checkout@v4
 
-      # - name: fromJson
-      #   run: |
-      #     echo "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
-
-      - name: toJson
+      - name: Create file from matrix
         run: |
-          echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}" > matrix.json
+          echo "${{ needs.generate-matrix.outputs.matrix }}" > matrix.out
 
-      - name: echo
-        run: |
-          echo "${{ needs.generate-matrix.outputs.matrix }}"
-
-      # - name: jq
-      #   run: |
-      #     echo "${{ needs.generate-matrix.outputs.matrix }}" | jq
-
-      # - name: test
-      #   run: |
-      #     cat matrix.json
-
-      - name: Setup Python
-        uses: actions/setup-python@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          python-version: '3.9' # Or any other version you prefer
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm install fs
 
       - name: Compare JSONs
         run: |
-          FILE_JSON_STRING=$(cat .github/ci/valid.json)
-          ENV_JSON_STRING=$(cat matrix.json)
-
-          python .github/ci/compare-jsons.py --env-json "$ENV_JSON_STRING" --file-json "$FILE_JSON_STRING"
+          node .github/ci/translate.js matrix.out .github/ci/valid.json
