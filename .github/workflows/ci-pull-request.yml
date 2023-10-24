@@ -28,6 +28,8 @@ jobs:
     needs: generate-matrix
 
     steps:
+      - name: Clone
+        uses: actions/checkout@v4
       # - name: Test
       #   run: |
       #     echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
