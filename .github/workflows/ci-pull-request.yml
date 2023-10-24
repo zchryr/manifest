@@ -39,9 +39,9 @@ jobs:
         run: |
           echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}" > matrix.json
 
-      # - name: echo
-      #   run: |
-      #     echo "${{ needs.generate-matrix.outputs.matrix }}"
+      - name: echo
+        run: |
+          echo "${{ needs.generate-matrix.outputs.matrix }}"
 
       # - name: jq
       #   run: |
