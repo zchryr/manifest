@@ -30,5 +30,4 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-          echo ${{ needs.generate-matrix.outputs.matrix }}
+          echo "${{ needs.generate-matrix.outputs.matrix }}"
