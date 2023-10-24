@@ -28,6 +28,28 @@ jobs:
     needs: generate-matrix
 
     steps:
-      - name: Test
+      # - name: Test
+      #   run: |
+      #     echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
+
+      - name: Compare JSONs
         run: |
-          echo "${{ toJson(needs.generate-matrix.outputs.matrix) }}"
+          # Read JSON from file
+          # FILE_JSON_STRING=$(cat path/to/your/file.json)
+
+          # Get JSON from environment variable
+          ENV_JSON_STRING="${{ needs.generate-matrix.outputs.matrix }}"
+
+          # Use Node.js to parse and compare
+          node -e "
+            const fileJson = JSON.parse('$FILE_JSON_STRING');
+            const envJson = JSON.parse('$ENV_JSON_STRING');
+            console.log(JSON.stringify(envJson));
+
+            # if (JSON.stringify(fileJson) !== JSON.stringify(envJson)) {
+            #   console.error('JSONs are not the same!');
+            #   process.exit(1);
+            # } else {
+            #   console.log('JSONs match!');
+            # }
+          "
