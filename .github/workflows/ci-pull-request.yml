@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Clone
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Matrix
         id: generate
@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Clone
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Create file from matrix
         run: |
